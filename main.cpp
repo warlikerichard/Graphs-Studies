@@ -6,6 +6,8 @@
 
 using namespace std;
 
+// A classe abaixo define um grafo que tem como principal dado um conjunto de maps, que representam vértices adjacentes.
+// Decidi criar um ponteiro de maps, pois assim posso atribuir uma chave a um evento do jogo. Ex: 2 = "Enter room".
 class Grafo {
 public:
     typedef map<int, std::string> Vertices;
@@ -30,6 +32,8 @@ public:
 
 Grafo::Grafo(int V) {
     this->V = V;
+    
+    // Aqui defino o que cada chave representa. São dados imutáveis.
     adj = new Vertices[V];
 
     vertices[0] = "Has Steal Skill";
@@ -41,12 +45,13 @@ Grafo::Grafo(int V) {
     vertices[6] = "Buy armor";
 }
 
+// Aqui adicionamos o evento w ao mapa que está na posição v do ponteiro adj, ou seja,
+// o evento w agora depende do evento v (v agora tem w como vértice adjacente).
 void Grafo::adicionarAresta(int v, int w) {
     adj[v][w] = getVertices()[w];
 }
 
 int main() {
-    
 
     Grafo g(7);
     g.adicionarAresta(0, 1);
@@ -61,10 +66,11 @@ int main() {
     cout << '\n';
 
     Grafo::Vertices* list = g.getList();
-
-    // Para cada i sendo um vértice que depende de vertices[3]
+    int evento = 0;
+    // Para cada i sendo um vértice que depende de vertices[evento]
     // Print vertice
-    for(auto i=list[0].begin(); i!=list[0].end(); i++){
+    cout << "'" << g.getVertices()[evento] << "' é necessário para:\n";
+    for(auto i=list[evento].begin(); i!=list[evento].end(); i++){
         cout << g.getVertices()[i->first] << "\n";
     }
 
